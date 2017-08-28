@@ -38,10 +38,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 		}
 		
 		@GetMapping("/produtosweb")
-		public Iterable<Produto> consultarProdutos(Model model) {
+		public String consultarProdutos(Model model) {
 			Iterable<Produto> prod = pr.findAll();
-			model.addAttribute("produtosweb", prod);
-			return prod;
+			model.addAttribute("prod", prod);
+			return "produtosweb";
 		}
 			
 		@GetMapping("/vendasweb")
