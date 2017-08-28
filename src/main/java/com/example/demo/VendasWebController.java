@@ -24,29 +24,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 		private VendaRepositorioV2 vr;
 		
 
-	@Configuration
-	@EnableWebSecurity
-	public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	    @Override
-	    protected void configure(HttpSecurity http) throws Exception {
-	        http
-	            .authorizeRequests()
-	                .antMatchers("/", "/home").permitAll()
-	                .anyRequest().authenticated()
-	                .and()
-	            .formLogin()
-	                .loginPage("/login")
-	                .permitAll()
-	                .and()
-	            .logout()
-	                .permitAll();
-	    }
 
 	    @Autowired
 	    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 	        auth.inMemoryAuthentication().withUser("user").password("password").roles("USER");
 	    }
-	}
+
 
 		@Autowired
 		public VendasWebController(ProdutoRepositorioV2 pr, VendaRepositorioV2 vr) {
@@ -54,19 +37,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 			this.vr = vr;
 		}
 		
-		@GetMapping("/produtos")
-		public String consultarProdutos(Model model) {
+		@GetMapping("/produtosweb")
+		public Iterable<Produto> consultarProdutos(Model model) {
 			Iterable<Produto> prod = pr.findAll();
-			model.addAttribute("produtos", prod);
-			return "produtos";
+			model.addAttribute("produtosweb", prod);
+			return prod;
 		}
 			
-		@GetMapping("/vendas")
+		@GetMapping("/vendasweb")
 		public Iterable<Venda> consultarVendas() {
 			return vr.findAll();
 		}
 		
-		@GetMapping("/vendas/{id}")
+		@GetMapping("/vendasweb{id}")
 		public ResponseEntity<Venda> consultarVenda(@PathVariable("id") int id) {
 			Venda v = vr.findOne(id);
 			if(v != null) {
@@ -76,7 +59,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 			}
 		}
 		
-		@PostMapping("/vendas")
+		@PostMapping("/vendasweb")
 		public ResponseEntity<Void> adicionarVenda(@RequestBody Venda venda, UriComponentsBuilder uc) {
 			if(venda.getId()!=0 && vr.exists(venda.getId())) {
 				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
@@ -87,7 +70,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 			return new ResponseEntity<Void>(cabecalho, HttpStatus.CREATED);
 		}
 
-		@PutMapping("/vendas/{codVenda}/{codProduto}/{quant}")
+		@PutMapping("/vendasweb{codVenda}/{codProduto}/{quant}")
 		public ResponseEntity<Venda> adicionarProdutoVenda(@PathVariable("codVenda") int codVenda, @PathVariable("codProduto") int codProduto, @PathVariable("quant") int quantidade) {
 			Venda v = vr.findOne(codVenda);
 			if(v != null) {
