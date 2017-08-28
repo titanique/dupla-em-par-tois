@@ -6,8 +6,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Welcome!</h1>
-        
-        <p>Click <a th:href="@{/login}">here</a> to login.</p>
+	 Usuario:<br>
+  		<input type="text" name="User">
+ 		<br>
+  	senha:<br>
+  		<input type="password" name="Password">
+ 		<br>
+  		<br>
+    <form action="/Login">
+  		<input type="submit" value="login">
+	</form>
     </body>
    
