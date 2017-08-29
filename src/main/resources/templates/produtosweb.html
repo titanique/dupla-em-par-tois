@@ -17,7 +17,13 @@
       <td th:text="${prod.nome}">Oranges</td>
       <td th:text="${#numbers.formatDecimal(prod.preco, 1, 2)}">0.99</td>
     </tr>
+    
   </tbody>
 </table>
+<br />
+<br />
+<form th:action="@{/teste}" method="get">
+	<input type="submit" value="Voltar" />
+	</form>
 </body>
 </html>

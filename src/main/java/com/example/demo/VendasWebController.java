@@ -84,6 +84,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		
+		/*@GetMapping("/teste")
+		public Iterable<Venda> mostraTeste() {
+			return vr.findAll();
+		}
+		*/
+		
+		
 	}
 	
 
